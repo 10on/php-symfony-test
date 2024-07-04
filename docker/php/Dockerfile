@@ -10,10 +10,6 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 WORKDIR /var/www/html
 
-COPY ./app .
-
-RUN cd app && composer install
-
 RUN chown -R www-data:www-data /var/www/html
 
 EXPOSE 9000
