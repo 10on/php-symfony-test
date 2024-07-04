@@ -1,14 +1,18 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div class="container mt-5">
-        <h1>Available Tests</h1>
-        <ul class="list-group">
-            {% for test in tests %}
-                <li class="list-group-item">
-                    <a href="{{ path('test', {'testId': test.id, 'step': 1}) }}">{{ test.title }}</a>
-                </li>
-            {% endfor %}
-        </ul>
-    </div>
+    {% if tests is not empty %}
+        <div class="container mt-5">
+            <h1>Available Tests</h1>
+            <ul class="list-group">
+                {% for test in tests %}
+                    <li class="list-group-item">
+                        <a href="{{ path('test', {'testId': test.id, 'step': 1}) }}">{{ test.title }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% else %}
+        <h1>We haven't tests :(</h1>
+    {% endif %}
 {% endblock %}
