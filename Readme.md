@@ -21,21 +21,28 @@
 
 	1.	Убедитесь, что Docker Desktop запущен.
 	2.	В терминале перейдите в корневую директорию проекта.
-	3.	Установите зависимости Composer:
+	3.  Запустите контейнеры:
 
 ```
-docker-compose run –rm php composer install
+docker-compose up -d
 ```
 
-	4.	Запустите контейнеры:
+	4.	Установите зависимости Composer:
 
 ```
-docker-compose up –build
+docker-compose exec php bash -c "cd /var/www/html/app && composer install"
 ```
 
-	5.	Откройте http://localhost:8080 в браузере.
+	5.	И выполните миграции:
 
-Проект готов к работе, если в БД есть тесты для прохождения, будет выведен их список
+```
+docker-compose exec php bash -c "cd /var/www/html/app && php bin/console doctrine:migrations:migrate --no-interaction"
+```
+
+	6.	Откройте http://localhost:8080 в браузере.
+
+Проект готов к работе, если в БД есть тесты для прохождения, будет выведен их список.
+
 
 ## Импорт тестов
 
@@ -53,10 +60,16 @@ php bin/console app:load-questions questions.txt
 docker-compose up –build
 ```
 
-	2.	Откройте новый терминал и выполните:
+	2.	В командной строке выполните:
 
 ```
-docker-compose exec php php bin/console app:load-questions /var/www/html/app/questions.txt
+docker-compose exec php php bin/console app:load-questions questions.txt
+```
+
+    Файл с вопросами из задания можно скорировать из корня:
+
+```
+cp questions.txt ./app
 ```
 
 ## Авторизация пользователей
