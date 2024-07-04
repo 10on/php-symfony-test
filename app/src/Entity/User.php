@@ -22,7 +22,7 @@ class User
     #[ORM\Column(length: 32)]
     private ?string $email = null;
 
-    #[ORM\Column]
+    #[ORM\Column(type: 'datetime_immutable', options: ['default' => 'CURRENT_TIMESTAMP'])]
     private ?\DateTimeImmutable $created_at = null;
 
     /**

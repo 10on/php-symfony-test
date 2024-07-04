@@ -11,20 +11,21 @@ use Doctrine\ORM\Mapping as ORM;
 class Question
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
+    #[ORM\GeneratedValue(strategy: 'SEQUENCE')]
+    #[ORM\SequenceGenerator(sequenceName: 'question_id_seq', allocationSize: 1, initialValue: 1)]
+    #[ORM\Column(type: 'integer')]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
     private ?string $text = null;
 
-    #[ORM\Column]
+    #[ORM\Column(type: 'integer')]
     private ?int $key = null;
 
-    #[ORM\Column]
+    #[ORM\Column(type: 'datetime_immutable', options: ['default' => 'CURRENT_TIMESTAMP'])]
     private ?\DateTimeImmutable $created_at = null;
 
-    #[ORM\Column(nullable: true)]
+    #[ORM\Column(type: 'datetime_immutable', nullable: true, options: ['default' => 'CURRENT_TIMESTAMP'])]
     private ?\DateTimeImmutable $updated_at = null;
 
     /**
@@ -96,25 +97,25 @@ class Question
      */
     public function getAnswers(): Collection
     {
-        return $this->Answers;
+        return $this->answers;
     }
 
-    public function addAnswers(Answer $Answers): static
+    public function addAnswer(Answer $answer): static
     {
-        if (!$this->Answers->contains($Answers)) {
-            $this->Answers->add($Answers);
-            $Answers->setQuestion($this);
+        if (!$this->answers->contains($answer)) {
+            $this->answers->add($answer);
+            $answer->setQuestion($this);
         }
 
         return $this;
     }
 
-    public function removeAnswers(Answer $answers): static
+    public function removeAnswer(Answer $answer): static
     {
-        if ($this->answers->removeElement($answers)) {
+        if ($this->answers->removeElement($answer)) {
             // set the owning side to null (unless already changed)
-            if ($answers->getQuestion() === $this) {
-                $answers->setQuestion(null);
+            if ($answer->getQuestion() === $this) {
+                $answer->setQuestion(null);
             }
         }
 

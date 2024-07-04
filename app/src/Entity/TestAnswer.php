@@ -9,21 +9,23 @@ use Doctrine\ORM\Mapping as ORM;
 class TestAnswer
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
+    #[ORM\GeneratedValue(strategy: 'SEQUENCE')]
+    #[ORM\SequenceGenerator(sequenceName: 'test_answer_id_seq', allocationSize: 1, initialValue: 1)]
+    #[ORM\Column(type: 'integer')]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(inversedBy: 'testAnswers')]
+    #[ORM\ManyToOne(targetEntity: TestResult::class, inversedBy: 'testAnswers')]
+    #[ORM\JoinColumn(nullable: false)]
     private ?TestResult $test_result = null;
 
-    #[ORM\ManyToOne]
+    #[ORM\ManyToOne(targetEntity: Question::class)]
     #[ORM\JoinColumn(nullable: false)]
     private ?Question $question = null;
 
-    #[ORM\Column]
+    #[ORM\Column(type: 'integer')]
     private ?int $answers = null;
 
-    #[ORM\Column]
+    #[ORM\Column(type: 'datetime_immutable', options: ['default' => 'CURRENT_TIMESTAMP'])]
     private ?\DateTimeImmutable $created_at = null;
 
     public function getId(): ?int

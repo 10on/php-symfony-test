@@ -9,22 +9,20 @@ use Doctrine\ORM\Mapping as ORM;
 class Answer
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
+    #[ORM\GeneratedValue(strategy: 'SEQUENCE')]
+    #[ORM\SequenceGenerator(sequenceName: 'answer_id_seq', allocationSize: 1, initialValue: 1)]
+    #[ORM\Column(type: 'integer')]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(inversedBy: 'asd')]
+    #[ORM\ManyToOne(targetEntity: Question::class, inversedBy: 'answers')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Question $question = null;
 
     #[ORM\Column(length: 255)]
     private ?string $text = null;
 
-    #[ORM\Column]
+    #[ORM\Column(type: 'integer')]
     private ?int $bit = null;
-
-    #[ORM\Column]
-    private ?\DateTimeImmutable $created_at = null;
 
     public function getId(): ?int
     {
@@ -63,18 +61,6 @@ class Answer
     public function setBit(int $bit): static
     {
         $this->bit = $bit;
-
-        return $this;
-    }
-
-    public function getCreatedAt(): ?\DateTimeImmutable
-    {
-        return $this->created_at;
-    }
-
-    public function setCreatedAt(\DateTimeImmutable $created_at): static
-    {
-        $this->created_at = $created_at;
 
         return $this;
     }
