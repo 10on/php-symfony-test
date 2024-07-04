@@ -26,6 +26,8 @@ services:
       POSTGRES_DB: symfony
       POSTGRES_USER: symfony
       POSTGRES_PASSWORD: symfony
+    ports:
+      - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
 

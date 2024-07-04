@@ -12,7 +12,7 @@ WORKDIR /var/www/html
 
 COPY ./app .
 
-RUN composer install
+RUN cd app && composer install
 
 RUN chown -R www-data:www-data /var/www/html
 
