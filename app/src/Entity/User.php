@@ -34,6 +34,7 @@ class User
     public function __construct()
     {
         $this->testResults = new ArrayCollection();
+        $this->created_at = new \DateTimeImmutable();
     }
 
     public function getId(): ?int

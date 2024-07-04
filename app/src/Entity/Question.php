@@ -1,11 +1,12 @@
 <?php
 
+// src/Entity/Question.php
 namespace App\Entity;
 
-use App\Repository\QuestionRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\QuestionRepository;
 
 #[ORM\Entity(repositoryClass: QuestionRepository::class)]
 class Question
@@ -27,6 +28,10 @@ class Question
 
     #[ORM\Column(type: 'datetime_immutable', nullable: true, options: ['default' => 'CURRENT_TIMESTAMP'])]
     private ?\DateTimeImmutable $updated_at = null;
+
+    #[ORM\ManyToOne(targetEntity: Test::class, inversedBy: 'questions')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Test $test = null;
 
     /**
      * @var Collection<int, Answer>
@@ -88,6 +93,18 @@ class Question
     public function setUpdatedAt(?\DateTimeImmutable $updated_at): static
     {
         $this->updated_at = $updated_at;
+
+        return $this;
+    }
+
+    public function getTest(): ?Test
+    {
+        return $this->test;
+    }
+
+    public function setTest(?Test $test): static
+    {
+        $this->test = $test;
 
         return $this;
     }
