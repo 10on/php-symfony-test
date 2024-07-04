@@ -20,5 +20,9 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
 
+    App\Service\TestService:
+        arguments:
+            $entityManager: '@doctrine.orm.entity_manager'
+            $formFactory: '@form.factory'
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="card">
+        <div class="card-header">
+            <h1>Test Results</h1>
+        </div>
+        <div class="card-body">
+            <ul class="list-group">
+                {% for result in results %}
+                    <li class="list-group-item">
+                        <strong>Question:</strong> {{ result.question.text }}<br>
+                        <ul class="list-group">
+                            {% for answer in result.question.answers %}
+                                <li class="list-group-item
+                                    {% if answer in result.userAnswers %}
+                                        {% if result.answerStates[answer.id] == 'correct' %}
+                                            list-group-item-primary
+                                        {% else %}
+                                            list-group-item-secondary
+                                        {% endif %}
+                                    {% endif %}
+                                ">
+                                    {{ answer.text }}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                        <strong>Result:</strong>
+                        <span class="badge {{ result.isCorrect ? 'badge-success' : 'badge-danger' }}">
+                            {{ result.isCorrect ? 'Correct' : 'Incorrect' }}
+                        </span>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endblock %}

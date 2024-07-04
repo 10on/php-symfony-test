@@ -3,3 +3,34 @@ controllers:
         path: ../src/Controller/
         namespace: App\Controller
     type: attribute
+
+login:
+    path: /login
+    controller: App\Controller\AuthController::login
+    methods: [GET, POST]
+
+logout:
+    path: /logout
+    controller: App\Controller\AuthController::logout
+    methods: [GET]
+
+index:
+    path: /
+    controller: App\Controller\IndexController::index
+    methods: [ GET ]
+
+test:
+    path: /test/{testId}/{step}
+    controller: App\Controller\TestController::test
+    requirements:
+        testId: \d+
+        step: \d+
+    defaults:
+        step: 1
+    methods: [ GET, POST ]
+
+
+test_result:
+    path: /test/result/{testId?}
+    controller: App\Controller\TestController::result
+    methods: [ GET ]
